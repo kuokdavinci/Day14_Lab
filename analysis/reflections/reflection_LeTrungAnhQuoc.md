@@ -15,9 +15,10 @@
 
 ## 2. Bài học kỹ thuật (Technical Depth)
 Qua bài Lab này, tôi đã hiểu sâu hơn về:
-- **Metrics**: MRR giúp đánh giá chất lượng vị trí của tài liệu tìm kiếm được, khắt khe hơn Hit Rate thông thường.
-- **Judge Reliability**: Tầm quan trọng của việc dùng Multi-Judge để khử nhiễu (Position Bias) và tăng tính khách quan cho Benchmarking.
-- **Async/Batching**: Cách tối ưu hóa hiệu năng gọi LLM hàng loạt mà không vi phạm Rate Limit của nhà cung cấp.
+- **MRR (Mean Reciprocal Rank)**: Đây là metric quan trọng để đánh giá Retrieval stage. Thay vì chỉ xem có tìm thấy dữ liệu không (Hit Rate), MRR đo lường vị trí của kết quả đúng. Nếu kết quả đúng nằm ở vị trí số 1, rank là 1; nếu ở vị trí số 2, rank là 0.5. MRR cao chứng tỏ hệ thống Reranker (Jina) đang hoạt động hiệu quả trong việc đẩy thông tin liên quan nhất lên đầu.
+- **Cohen's Kappa**: Tôi đã học cách dùng chỉ số này để đo lường độ tin cậy của Multi-Judge. Nó không chỉ đơn thuần là tỷ lệ đồng thuận (Agreement Rate) mà còn tính đến tỷ lệ đồng thuận ngẫu nhiên. Trong hệ thống benchmark, Cohen's Kappa giúp xác định xem sự đồng nhất giữa GPT-4o-mini và Qwen là do tiêu chí Rubric chặt chẽ hay chỉ là trùng hợp.
+- **Position Bias**: Một hiện tượng "thiên kiến vị trí" của LLM Judge, nơi mô hình có xu hướng ưu tiên chọn các phương án ở đầu hoặc ở cuối danh sách. Bằng cách sử dụng Multi-Judge và thiết lập Rubric chấm điểm số thay vì chọn phương án, tôi đã giảm thiểu được sái số này.
+- **Trade-off Chi phí vs Chất lượng**: Trong quá trình vận hành, tôi nhận ra việc dùng GPT-4o cho 100% case sẽ rất tốn kém (Chi phí cao). Việc thay thế bằng GPT-4o-mini làm Judge chính và chỉ gọi Qwen/GPT-4o để "phân xử" khi có xung đột (Consensus logic) giúp giảm 30-40% chi phí mà vẫn giữ nguyên độ chính xác của kết quả Benchmark (Chất lượng).
 - **Grounding & Model Intelligence**: Tôi nhận ra rằng với các model thông minh như Qwen, nếu System Prompt (V1) không có tính **Grounding** khắt khe, mô hình sẽ tự ý "sáng tạo" thêm thông tin ngoài ngữ cảnh. Thậm chí các model Judge như GPT-4o-mini cũng có thể bị đánh lừa bởi sự nhiệt tình (Helpfulness) này nếu chúng ta không thiết lập các tiêu chí chấm điểm (Rubric) cực kỳ chặt chẽ về tính An toàn và Fact-checking.
 
 ## 3. Khó khăn & Cách giải quyết (Problem Solving)
