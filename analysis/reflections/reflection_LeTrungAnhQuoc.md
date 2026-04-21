@@ -1,17 +1,17 @@
 # 🧠 Cá nhân Phản ánh (Individual Reflection)
 
-**Họ và tên:** [Điền tên bạn vào đây]  
-**MSSV:** [Điền MSSV]  
-**Nhóm:** AI Evaluation Factory
+**Họ và tên:** Lê Trung Anh Quốc 
+**MSSV:** 2A202600108
+**Nhóm:** Cá nhân (bởi vì làm cá nhân mang lại nhiều giá trị về mặt kiến thức, dễ dàng theo dõi các bước thực hiện và cấu trúc của bài lab, đặc biệt trong dự án này)
 
 ---
 
 ## 1. Đóng góp cụ thể (Engineering Contribution)
-- [ ] Thiết kế Golden Dataset & Script SDG.
-- [ ] Triển khai Multi-Judge Engine.
-- [ ] Xây dựng Async Pipeline & Logic Batching.
-- [ ] Phân tích lỗi (Failure Analysis) & 5 Whys.
-- [ ] Tối ưu System Prompt cho Agent V2.
+- [x] Thiết kế Golden Dataset & Script SDG.
+- [x] Triển khai Multi-Judge Engine.
+- [x] Xây dựng Async Pipeline & Logic Batching.
+- [x] Phân tích lỗi (Failure Analysis) & 5 Whys.
+- [x] Tối ưu System Prompt cho Agent V2.
 
 ## 2. Bài học kỹ thuật (Technical Depth)
 Qua bài Lab này, tôi đã hiểu sâu hơn về:
