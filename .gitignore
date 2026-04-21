@@ -1,4 +1,5 @@
 # Security
+data/source/
 .env
 
 # AI Agent internal data (QUAN TRỌNG)
