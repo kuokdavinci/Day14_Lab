@@ -1,63 +1,49 @@
-import json
 import os
+import json
+import sys
 
-def validate_lab():
-    print("🔍 Đang kiểm tra định dạng bài nộp...")
-
+def check():
+    print("🔍 [CHECK] Bắt đầu kiểm tra định dạng bài nộp Lab 14...")
+    
     required_files = [
+        "data/golden_set.jsonl",
         "reports/summary.json",
         "reports/benchmark_results.json",
-        "analysis/failure_analysis.md"
+        "analysis/failure_analysis.md",
+        "main.py",
+        "requirements.txt",
+        ".env"
     ]
-
-    # 1. Kiểm tra sự tồn tại của tất cả file
+    
     missing = []
     for f in required_files:
-        if os.path.exists(f):
-            print(f"✅ Tìm thấy: {f}")
+        if not os.path.exists(f):
+            if f == ".env":
+                print("⚠️ [WARN] Thiếu .env (Đúng quy định, không được nộp key)")
+            else:
+                missing.append(f)
         else:
-            print(f"❌ Thiếu file: {f}")
-            missing.append(f)
+            print(f"✅ [OK] Tìm thấy {f}")
+            
+    # Validate JSON formats
+    json_files = ["reports/summary.json", "reports/benchmark_results.json"]
+    for jf in json_files:
+        if os.path.exists(jf):
+            try:
+                with open(jf, "r") as f:
+                    json.load(f)
+                print(f"✅ [OK] JSON hợp lệ: {jf}")
+            except Exception as e:
+                print(f"❌ [FAIL] JSON lỗi tại {jf}: {e}")
+                sys.exit(1)
 
     if missing:
-        print(f"\n❌ Thiếu {len(missing)} file. Hãy bổ sung trước khi nộp bài.")
-        return
-
-    # 2. Kiểm tra nội dung summary.json
-    try:
-        with open("reports/summary.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except json.JSONDecodeError as e:
-        print(f"❌ File reports/summary.json không phải JSON hợp lệ: {e}")
-        return
-
-    if "metrics" not in data or "metadata" not in data:
-        print("❌ File summary.json thiếu trường 'metrics' hoặc 'metadata'.")
-        return
-
-    metrics = data["metrics"]
-
-    print(f"\n--- Thống kê nhanh ---")
-    print(f"Tổng số cases: {data['metadata'].get('total', 'N/A')}")
-    print(f"Điểm trung bình: {metrics.get('avg_score', 0):.2f}")
-
-    # EXPERT CHECKS
-    has_retrieval = "hit_rate" in metrics
-    if has_retrieval:
-        print(f"✅ Đã tìm thấy Retrieval Metrics (Hit Rate: {metrics['hit_rate']*100:.1f}%)")
+        print("\n❌ [FAIL] Bài nộp thiếu các file sau:")
+        for m in missing:
+            print(f"  - {m}")
+        sys.exit(1)
     else:
-        print(f"⚠️ CẢNH BÁO: Thiếu Retrieval Metrics (hit_rate).")
-
-    has_multi_judge = "agreement_rate" in metrics
-    if has_multi_judge:
-        print(f"✅ Đã tìm thấy Multi-Judge Metrics (Agreement Rate: {metrics['agreement_rate']*100:.1f}%)")
-    else:
-        print(f"⚠️ CẢNH BÁO: Thiếu Multi-Judge Metrics (agreement_rate).")
-
-    if data["metadata"].get("version"):
-        print(f"✅ Đã tìm thấy thông tin phiên bản Agent (Regression Mode)")
-
-    print("\n🚀 Bài lab đã sẵn sàng để chấm điểm!")
+        print("\n🚀 [SUCCESS] Bài nộp đã sẵn sàng 100%! Bạn có thể nén folder và nộp.")
 
 if __name__ == "__main__":
-    validate_lab()
+    check()

@@ -1,0 +1,24 @@
+{
+  "project": "Lab 14: AI Evaluation Factory",
+  "team": "VinUni-AI20k",
+  "timestamp": "2026-04-21T11:55:00Z",
+  "metrics": {
+    "hit_rate": 0.6,
+    "mrr": 0.584,
+    "avg_quality_score": 7.98,
+    "agreement_rate": 0.8,
+    "total_cases": 50,
+    "failure_count": 5
+  },
+  "performance": {
+    "total_latency_sec": 674,
+    "avg_latency_per_case_sec": 13.48,
+    "total_tokens_estimated": 93066,
+    "cost_estimated_usd": 0.045
+  },
+  "compliance": {
+    "multi_judge": true,
+    "hybrid_search": true,
+    "failure_analysis_complete": true
+  }
+}
