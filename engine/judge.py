@@ -40,14 +40,22 @@ Context: {context}
                 model_name = model.replace("gemini/", "")
                 api_key = os.getenv("GOOGLE_API_KEY")
                 provider = "gemini"
+                api_base = None
             elif "groq" in model.lower():
                 model_name = model
                 api_key = os.getenv("GROQ_API_KEY")
                 provider = "groq"
+                api_base = None
+            elif "qwen" in model.lower():
+                model_name = model
+                api_key = os.getenv("DASHSCOPE_API_KEY") or os.getenv("DASH_SCOPE_API_KEY")
+                provider = None
+                api_base = os.getenv("DASHSCOPE_API_BASE")
             else:
                 model_name = model
                 api_key = os.getenv("OPENAI_API_KEY")
                 provider = None
+                api_base = None
 
             response = await asyncio.to_thread(
                 completion,
@@ -58,6 +66,7 @@ Context: {context}
                     {"role": "user", "content": prompt}
                 ],
                 api_key=api_key,
+                api_base=api_base,
                 # Force JSON mode if supported
                 response_format={ "type": "json_object" } if ("gpt" in model_name or "groq" in model_name) else None,
                 temperature=0

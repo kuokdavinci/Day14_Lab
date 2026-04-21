@@ -1,0 +1,11 @@
+{
+  "hit_rate": 1.0,
+  "mrr": 0.92,
+  "avg_quality_score": 8.65,
+  "agreement_rate": 0.86,
+  "failures": 2,
+  "total_tokens": 43568,
+  "total_latency_sec": 8308.45,
+  "gate_status": "FAILED",
+  "recommendation": "🛑 ROLLBACK: Quality below threshold or has Failures"
+}

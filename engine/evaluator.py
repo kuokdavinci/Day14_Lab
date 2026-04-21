@@ -15,7 +15,7 @@ class ExpertEvaluator:
         
         for i in range(total):
             gt_source = test_cases[i]["metadata"].get("source_id")
-            retrieved_sources = results[i].get("metadata", {}).get("sources", [])
+            retrieved_sources = results[i].get("agent_metadata", {}).get("sources", [])
             
             # Hit Rate
             if gt_source in retrieved_sources:
